@@ -1,0 +1,159 @@
+This is the combined license file for the alpinemath/pise Docker image.
+It gathers license info for the open-source software projects that have been
+installed in this image.
+
+SUMMARY
+=======
+
+This is a listing of the software packages installed in the image, and the
+names of their licenses. The full text of the licenses can be found in the
+sections that follow.
+
+                            *  *  *
+
+    The main server deployed in the image is:
+
+pfsc-server 0.22.11                                     Apache 2.0
+  https://github.com/alpinemath/pfsc-server
+
+                            *  *  *
+
+    Supporting software includes:
+
+    The Redis database, with RedisGraph:
+
+redis 6.2.4                                             BSD-3-Clause
+  https://github.com/redis/redis
+redisgraph 2.4.13                                       RSAL
+  https://github.com/RedisGraph/RedisGraph
+
+                            *  *  *
+
+    Deployment managed by:
+
+supervisor 4.2.4                                        BSD-derived
+  https://github.com/Supervisor/supervisor/tree/4.2.4
+
+                            *  *  *
+
+    The main JavaScript project served in ise.bundle.js:
+
+pfsc-ise 22.10                                          Apache 2.0
+  https://github.com/alpinemath/pfsc-ise
+
+                            *  *  *
+
+    Computer algebra and symbolic manipulation provided by:
+
+SymPy                                                   BSD-3-Clause
+
+    The SymPy project is at:
+    https://github.com/sympy/sympy
+
+    We use Alpine Mathematics' fork of SymPy, which can be found at:
+    https://github.com/alpinemath/sympy
+
+                            *  *  *
+
+    Other JavaScript projects loaded alongside ise.bundle.js:
+
+pyodide 0.19.1                                          MPL-2.0
+  https://github.com/pyodide/pyodide
+
+PDF.js                                                  Apache 2.0
+
+    The PDF.js project is at:
+    https://github.com/mozilla/pdf.js
+
+    We use Alpine Mathematics' fork of PDF.js, which can be found at:
+    https://github.com/alpinemath/pfsc-pdf
+
+mathjax 3.0.1                                           Apache 2.0
+  https://github.com/mathjax/MathJax
+
+elkjs 0.8.1                                             EPL-2.0
+  https://github.com/kieler/elkjs
+
+  elkjs is a transpilation of ELK:
+  https://github.com/eclipse/elk
+
+                            *  *  *
+
+    Python packages running in the browser via Pyodide:
+
+{{ pyodide_python_packages }}
+
+                            *  *  *
+
+    Python packages supporting pfsc-server:
+
+Source code for these packages can be found in the Docker image,
+under /usr/local/lib/python3.8/site-packages.
+
+{{ python_packages }}
+
+                            *  *  *
+    Python
+
+python 3.8                                              PSF License
+
+                            *  *  *
+
+    Other Javascript packages included in ise.bundle.js:
+
+{{ javascript_packages }}
+
+                            *  *  *
+
+    GCC runtime libraries
+
+libgomp                 GPL 3.0 with GCC Runtime Library Exception
+  https://github.com/gcc-mirror/gcc/tree/master/libgomp
+
+
+LICENSES
+========
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+pfsc-server 0.22.11
+  https://github.com/alpinemath/pfsc-server
+
+{{ pfsc_server_Apache }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+RedisGraph 2.4.13
+  https://github.com/RedisGraph/RedisGraph
+
+This software is subject to the terms of the Redis Source Available License Agreement.
+
+{{ RSAL }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Redis 6.2.4
+  https://github.com/redis/redis
+
+{{ redis_BSD }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+supervisor 4.2.4
+  https://github.com/Supervisor/supervisor/tree/4.2.4
+
+{{ supervisor_license }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+python 3.8
+
+{{ PSF_license }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+libgomp
+  https://github.com/gcc-mirror/gcc/tree/master/libgomp
+
+{{ gcc_runtime }}
+
+{{ gpl3 }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{{ other_licenses }}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

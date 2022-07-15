@@ -1,0 +1,59 @@
+# --------------------------------------------------------------------------- #
+#   Proofscape Manage                                                         #
+#                                                                             #
+#   Copyright (c) 2021-2022 Alpine Mathematics contributors                   #
+#                                                                             #
+#   Licensed under the Apache License, Version 2.0 (the "License");           #
+#   you may not use this file except in compliance with the License.          #
+#   You may obtain a copy of the License at                                   #
+#                                                                             #
+#       http://www.apache.org/licenses/LICENSE-2.0                            #
+#                                                                             #
+#   Unless required by applicable law or agreed to in writing, software       #
+#   distributed under the License is distributed on an "AS IS" BASIS,         #
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
+#   See the License for the specific language governing permissions and       #
+#   limitations under the License.                                            #
+# --------------------------------------------------------------------------- #
+
+{% if nginx %}
+
+RUN rm /etc/nginx/sites-enabled/default
+COPY {{tmp_dir_name}}/nginx.conf /etc/nginx/sites-enabled/pfsc
+
+RUN ln -s /proofscape/PDFLibrary /usr/share/nginx/PDFLibrary \
+ && mkdir /usr/share/nginx/pyodide \
+ && mkdir /usr/share/nginx/whl
+
+COPY pfsc-pdf/build/generic /usr/share/nginx/pdfjs
+
+{% for filename in pyodide_files %}
+COPY pyodide/{{filename}} /usr/share/nginx/pyodide/
+{% endfor %}
+
+{% for repo_name, whl_filename in wheels.items() %}
+COPY {{repo_name}}/dist/{{whl_filename}} /usr/share/nginx/whl/
+{% endfor %}
+
+COPY pfsc-ise/dist /usr/share/nginx/ise
+
+{% else %}
+
+WORKDIR /home/pfsc/proofscape/src/pfsc-server/static
+RUN ln -s /proofscape/PDFLibrary \
+ && mkdir pyodide \
+ && mkdir whl
+
+COPY pfsc-pdf/build/generic ./pdfjs
+
+{% for filename in pyodide_files %}
+COPY pyodide/{{filename}} ./pyodide/
+{% endfor %}
+
+{% for repo_name, whl_filename in wheels.items() %}
+COPY {{repo_name}}/dist/{{whl_filename}} ./whl/
+{% endfor %}
+
+COPY pfsc-ise/dist ./
+
+{% endif %}
