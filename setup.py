@@ -20,7 +20,7 @@ from setuptools import setup
 
 setup(
     name='pfsc-manage',
-    version='0.22.7-dev',
+    version='0.22.7',
     url='https://github.com/alpinemath/pfsc-manage',
     py_modules=['manage'],
     install_requires=[
