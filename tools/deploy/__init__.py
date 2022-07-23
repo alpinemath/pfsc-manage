@@ -553,7 +553,7 @@ ADMIN_SH_SCRIPT_TPLT = jinja2.Template(r"""#!/usr/bin/env sh
 #
 # for a list of commands.
 
-sudo docker run --rm -it --entrypoint=bash \
+{{docker_command}} run --rm -it --entrypoint=bash \
   --network="mca-{{deploy_dir_name}}" \
   -v "{{deploy_dir_path}}/docker.env:/home/pfsc/proofscape/src/pfsc-server/instance/.env:ro" \
   -e FLASK_CONFIG={{flask_config}} \
@@ -567,7 +567,8 @@ def write_admin_sh_script(deploy_dir_name, deploy_dir_path, pfsc_tag, flask_conf
         deploy_dir_name=deploy_dir_name,
         deploy_dir_path=deploy_dir_path,
         pfsc_tag=pfsc_tag,
-        flask_config=flask_config
+        flask_config=flask_config,
+        docker_command=pfsc_conf.DOCKER_CMD,
     )
 
 
