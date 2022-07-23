@@ -86,6 +86,7 @@ COPY pfsc-server/static static
 COPY pfsc-server/config.py ./
 COPY pfsc-server/web.py ./
 COPY pfsc-server/worker.py ./
+COPY pfsc-server/getg.py ./
 
 {% if demos %}
 COPY pfsc-demo-repos /home/pfsc/demos
