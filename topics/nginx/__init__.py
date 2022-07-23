@@ -62,3 +62,18 @@ def write_nginx_conf(
         loc_map=loc_map,
         **kwargs
     ))
+
+
+def write_maintenance_nginx_conf(
+        listen_on=80,
+        ssl=False, basic_auth_title=None,
+        redir_http=False,
+        **kwargs):
+    template = jinja_env.get_template('maintenance_nginx.conf')
+    return squash(template.render(
+        listen_on=listen_on,
+        redir_http=redir_http,
+        ssl=ssl,
+        basic_auth_title=basic_auth_title,
+        **kwargs
+    ))

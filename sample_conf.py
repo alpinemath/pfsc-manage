@@ -62,6 +62,17 @@ AUTH_BASIC_PASSWORD = None
 TWIN_SERVER_NAME = None
 TWIN_ROOT_DIR = None
 
+# Maintenance Site
+#
+# You may want to deploy a site that serves a single "Maintenance" page, in
+# response to all requests. If you have set up SSL and/or HTTP redirect, you
+# will want the same settings to apply in this one-page site. If you define
+# here a filesystem path pointing to a directory containing an index.html file
+# which you want to be served as the maintenance page, then the
+# `deploy generate` and `deploy production` commands will make a docker
+# compose file to run such a site.
+MAINTENANCE_SITE_DIR = None
+
 # Email templates directory
 #
 # This variable has the same name as one of the pfsc-server config vars, but

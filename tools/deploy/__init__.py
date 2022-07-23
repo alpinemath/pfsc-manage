@@ -33,7 +33,7 @@ from tools.util import (
     simple_timestamp, trymakedirs, check_app_url_prefix,
     resolve_fs_path,
 )
-from topics.nginx import write_nginx_conf
+from topics.nginx import write_nginx_conf, write_maintenance_nginx_conf
 import conf as pfsc_conf
 
 
@@ -218,6 +218,27 @@ def generate(gdb, pfsc_tag, oca_tag, workers, demos, mount_code, mount_pkg, dump
         with open(dummy_dc_path, 'w') as f:
             f.write(y_dummy)
         click.echo('Wrote dummy-docker-compose.yml')
+
+    # maintenance site
+    if pfsc_conf.MAINTENANCE_SITE_DIR:
+        m_nginx_conf = write_maintenance_nginx_conf(
+            listen_on=443 if pfsc_conf.SSL else 80,
+            ssl=pfsc_conf.SSL,
+            basic_auth_title=pfsc_conf.AUTH_BASIC_TITLE if pfsc_conf.AUTH_BASIC_PASSWORD else None,
+            redir_http=(pfsc_conf.REDIRECT_HTTP_FROM is not None),
+        )
+        mnc_path = os.path.join(new_dir_path, 'maintenance_nginx.conf')
+        with open(mnc_path, 'w') as f:
+            f.write(m_nginx_conf)
+        click.echo('Wrote maintenance_nginx.conf')
+
+        y_mn = write_maintenance_docker_compose_yaml(new_dir_name, new_dir_path)
+        if dump_dc:
+            click.echo(y_mn)
+        mn_dc_path = os.path.join(new_dir_path, 'maintenance-docker-compose.yml')
+        with open(mn_dc_path, 'w') as f:
+            f.write(y_mn)
+        click.echo('Wrote maintenance-docker-compose.yml')
 
     # nginx.conf
     root_url, app_url_prefix = check_app_url_prefix()
@@ -683,6 +704,22 @@ def write_dummy_docker_compose_yaml(deploy_dir_name, deploy_dir_path,
         'networks': {
             'default': {
                 'name': f'dummy-{deploy_dir_name}',
+            }
+        },
+    }
+    y = simple_yaml.dumps(d, indent=2) + '\n'
+    return y
+
+
+def write_maintenance_docker_compose_yaml(deploy_dir_name, deploy_dir_path):
+    d = {
+        'version': '3.5',
+        'services': {
+            'nginx': services.maintenance_nginx(deploy_dir_path)
+        },
+        'networks': {
+            'default': {
+                'name': f'maintenance-{deploy_dir_name}',
             }
         },
     }

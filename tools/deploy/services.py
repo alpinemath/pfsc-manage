@@ -318,3 +318,25 @@ def nginx(deploy_dir_path, tag=conf.NGINX_IMAGE_TAG,
     if conf.AUTH_BASIC_PASSWORD:
         d['volumes'].append(f'{deploy_dir_path}/htpasswd:/etc/nginx/.htpasswd')
     return d
+
+
+def maintenance_nginx(deploy_dir_path, tag=conf.NGINX_IMAGE_TAG,
+          host=conf.PFSC_ISE_MCA_HOST, port=conf.PFSC_ISE_MCA_PORT):
+    d = {
+        'image': f"nginx:{tag}",
+        'ports': [
+            f"{host}:{port}:{443 if conf.SSL else 80}"
+        ],
+        'volumes': [
+            f'{deploy_dir_path}/maintenance_nginx.conf:/etc/nginx/conf.d/default.conf:ro',
+            f'{resolve_fs_path("MAINTENANCE_SITE_DIR")}:/usr/share/nginx/html/maintenance:ro',
+        ],
+    }
+    if conf.REDIRECT_HTTP_FROM:
+        d['ports'].append(f"{host}:{conf.REDIRECT_HTTP_FROM}:80")
+    if conf.SSL:
+        d['volumes'].append(f'{resolve_fs_path("SSL_CERT")}:/etc/nginx/ssl/cert')
+        d['volumes'].append(f'{resolve_fs_path("SSL_KEY")}:/etc/nginx/ssl/key')
+    if conf.AUTH_BASIC_PASSWORD:
+        d['volumes'].append(f'{deploy_dir_path}/htpasswd:/etc/nginx/.htpasswd')
+    return d
